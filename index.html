@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Youtos | Your Trusted Domestic Help Platform</title>
+  <style>
+    /* Root and base */
+    :root {
+      --color-bg: #ffffff;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6b7280;
+      --color-accent: #111827;
+      --color-accent-hover: #374151;
+      --color-button-bg: #111827;
+      --color-button-hover-bg: #374151;
+      --radius: 0.75rem;
+      --shadow-light: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-medium: 0 4px 6px rgba(0,0,0,0.1);
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      --transition-speed: 0.3s;
+    }
+
+    /* Reset & base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h1, h2, h3, h4 {
+      color: var(--color-text-primary);
+      margin: 0 0 1rem 0;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--color-text-primary);
+    }
+    h2 {
+      font-size: 2rem;
+    }
+    p {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.125rem;
+    }
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition-speed);
+    }
+    a:hover, a:focus {
+      color: var(--color-accent-hover);
+      outline: none;
+      text-decoration: underline;
+    }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      border-radius: var(--radius);
+      background-color: var(--color-button-bg);
+      color: white;
+      font-weight: 700;
+      padding: 0.75rem 1.75rem;
+      font-size: 1.125rem;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
+      user-select: none;
+    }
+    button:hover, button:focus {
+      background-color: var(--color-button-hover-bg);
+      transform: scale(1.05);
+      outline: none;
+    }
+    input, select {
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius);
+      color: var(--color-text-primary);
+      width: 100%;
+      box-sizing: border-box;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+    }
+    input:focus, select:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px rgba(17,24,39,0.2);
+      outline: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    /* Sticky header */
+    header {
+      top: 0;
+      position: sticky;
+      background: var(--color-bg);
+      box-shadow: var(--shadow-light);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: box-shadow 0.3s;
+    }
+    header.scrolled {
+      box-shadow: var(--shadow-medium);
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      user-select: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+    .nav-links a {
+      position: relative;
+      padding: 0.25rem 0;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -3px;
+      left: 0;
+      background-color: var(--color-accent);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after, .nav-links a:focus::after {
+      width: 100%;
+    }
+
+    /* Hero */
+    .hero {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+      text-align: center;
+    }
+    .hero h1 {
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p {
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+    .hero .cta-button {
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+    }
+
+    /* Sections */
+    section {
+      padding-top: 4rem;
+      padding-bottom: 5rem;
+    }
+    section > h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--color-text-primary);
+    }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: #f9fafb;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-light);
+      padding: 2rem;
+      transition: box-shadow 0.3s;
+      cursor: default;
+    }
+    .feature-card:hover, .feature-card:focus-within {
+      box-shadow: var(--shadow-medium);
+      outline: none;
+    }
+    .feature-card h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--color-text-primary);
+    }
+    .feature-card p {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Booking form */
+    form {
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #f9fafb;
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-light);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    label {
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .submit-button {
+      align-self: center;
+      margin-top: 1rem;
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .testimonial-card {
+      background: #f3f4f6;
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      box-shadow: var(--shadow-light);
+      font-style: italic;
+      color: var(--color-text-primary);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '“';
+      font-size: 3rem;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      color: #9ca3af;
+      font-weight: 700;
+    }
+    .testimonial-author {
+      margin-top: 1rem;
+      font-weight: 700;
+      font-style: normal;
+      color: var(--color-accent);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      border-top: 1px solid #e5e7eb;
+      user-select: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.25rem;
+      }
+      header nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .nav-links {
+        justify-content: center;
+      }
+      form {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header aria-label="Primary navigation">
+    <div class="container">
+      <nav>
+        <div class="logo" tabindex="0">Youtos</div>
+        <div class="nav-links" role="menubar" aria-label="Primary menu">
+          <a href="#services" role="menuitem" tabindex="0">Services</a>
+          <a href="#booking" role="menuitem" tabindex="0">Book Now</a>
+          <a href="#testimonials" role="menuitem" tabindex="0">Testimonials</a>
+          <a href="#contact" role="menuitem" tabindex="0">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Hero section introducing Youtos">
+      <div class="container">
+        <h1>Youtos: Your Trusted Domestic Help Platform</h1>
+        <p>Find reliable, affordable, and convenient domestic services — delivered right to your doorstep.</p>
+        <button class="cta-button" id="ctaBookNow">Get Started</button>
+      </div>
+    </section>
+
+    <section id="services" aria-label="Services offered by Youtos">
+      <div class="container">
+        <h2>Our Services</h2>
+        <div class="features-grid" role="list">
+          <article class="feature-card" role="listitem" tabindex="0" aria-labelledby="service1-title">
+            <h3 id="service1-title">Errand Running</h3>
+            <p>Quick and reliable errands: pick-ups, drop-offs, and everything in between.</p>
+          </article>
+          <article class="feature-card" role="listitem" tabindex="0" aria-labelledby="service2-title">
+            <h3 id="service2-title">Home Cleaning</h3>
+            <p>Professional cleaning services tailored to your home’s unique needs.</p>
+          </article>
+          <article class="feature-card" role="listitem" tabindex="0" aria-labelledby="service3-title">
+            <h3 id="service3-title">Grocery Shopping</h3>
+            <p>Let us handle your grocery lists with care and speedy delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" aria-label="Booking a service with Youtos">
+      <div class="container">
+        <h2>Book Your Service</h2>
+        <form id="bookingForm" aria-describedby="bookingDesc">
+          <p id="bookingDesc">Fill out the form below to schedule your service with Youtos.</p>
+
+          <div>
+            <label for="serviceType">Select Service</label>
+            <select id="serviceType" name="serviceType" required aria-required="true">
+              <option value="" disabled selected>Select a service</option>
+              <option value="errand">Errand Running</option>
+              <option value="cleaning">Home Cleaning</option>
+              <option value="grocery">Grocery Shopping</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" required aria-required="true" min="">
+          </div>
+
+          <div>
+            <label for="time">Preferred Time</label>
+            <input type="time" id="time" name="time" required aria-required="true" min="08:00" max="20:00" step="900" />
+            <small>Available from 8:00 AM to 8:00 PM</small>
+          </div>
+
+          <div>
+            <label for="details">Additional Details</label>
+            <textarea id="details" name="details" rows="3" placeholder="Any special instructions?"></textarea>
+          </div>
+
+          <button type="submit" class="submit-button">Submit Booking</button>
+          <p id="formMessage" role="alert" aria-live="polite" style="margin-top: 0.5rem; color: #b91c1c;"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="testimonials" aria-label="User testimonials about Youtos">
+      <div class="container">
+        <h2>What Our Customers Say</h2>
+        <div class="testimonials-grid">
+          <blockquote class="testimonial-card" tabindex="0">
+            <p>Youtos has been a game changer for managing my daily errands. Quick, reliable, and friendly service every time.</p>
+            <footer class="testimonial-author">— Sarah M.</footer>
+          </blockquote>
+          <blockquote class="testimonial-card" tabindex="0">
+            <p>The home cleaning service from Youtos exceeded my expectations. Attention to detail and very professional.</p>
+            <footer class="testimonial-author">— James T.</footer>
+          </blockquote>
+          <blockquote class="testimonial-card" tabindex="0">
+            <p>Ordering groceries through Youtos saved me so much time. Highly recommend for busy families!</p>
+            <footer class="testimonial-author">— Priya K.</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" aria-label="Contact Youtos for more information">
+      <div class="container" style="text-align:center;">
+        <h2>Get In Touch</h2>
+        <p>Questions? Reach out to us!</p>
+        <p>Email: <a href="mailto:support@youtos.com">support@youtos.com</a></p>
+        <p>Phone: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" aria-label="Site footer">
+      &copy; 2024 Youtos. All rights reserved.
+    </div>
+  </footer>
+
+<script>
+  // For accessibility and smooth navigation
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if(target) {
+        target.focus({preventScroll: true});
+        window.scroll({
+          top: target.offsetTop - 70,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Scroll effect on header box shadow
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 20) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Set minimum date on date picker to today
+  const dateInput = document.getElementById('date');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.setAttribute('min', today);
+
+  // Booking form validation and submission
+  const bookingForm = document.getElementById('bookingForm');
+  const formMessage = document.getElementById('formMessage');
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formMessage.textContent = '';
+
+    const service = bookingForm.serviceType.value;
+    const date = bookingForm.date.value;
+    const time = bookingForm.time.value;
+
+    if(!service) {
+      formMessage.textContent = 'Please select a service.';
+      bookingForm.serviceType.focus();
+      return;
+    }
+    if(!date) {
+      formMessage.textContent = 'Please select a date.';
+      bookingForm.date.focus();
+      return;
+    }
+    if(!time) {
+      formMessage.textContent = 'Please select a time.';
+      bookingForm.time.focus();
+      return;
+    }
+
+    // Simple validation for time range (08:00 - 20:00)
+    const [hour, minute] = time.split(':').map(Number);
+    if(hour < 8 || hour > 20 || (hour === 20 && minute > 0)) {
+      formMessage.textContent = 'Please select a time between 08:00 and 20:00.';
+      bookingForm.time.focus();
+      return;
+    }
+
+    // Simulate successful submission
+    formMessage.style.color = 'green';
+    formMessage.textContent = `Thank you! Your ${service.replace(/^\w/, c => c.toUpperCase())} service is booked for ${date} at ${time}.`;
+    bookingForm.reset();
+  });
+
+  // Quick scroll to booking form on CTA button click
+  document.getElementById('ctaBookNow').addEventListener('click', () => {
+    const bookingSection = document.getElementById('booking');
+    if(bookingSection) {
+      window.scroll({
+        top: bookingSection.offsetTop - 70,
+        behavior: 'smooth'
+      });
+      bookingSection.querySelector('select').focus();
+    }
+  });
+</script>
+</body>
+</html>
